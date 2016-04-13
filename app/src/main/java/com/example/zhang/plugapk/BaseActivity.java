@@ -2,10 +2,14 @@ package com.example.zhang.plugapk;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.AssetManager;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+
+import java.lang.reflect.Method;
 
 /**
  * Created by zhang on 16-4-11.
@@ -21,6 +25,9 @@ public class BaseActivity extends Activity {
     public static final String EXTRA_DEX_PATH = "extra.dex.path";
     public static final String EXTRA_CLASS = "extra.class";
 
+    private AssetManager mAssetManager;
+    protected Resources mResources;
+
     public static final String PROXY_VIEW_ACTION =
             "com.ryg.dynamicloadhost.VIEW";
     public static final String DEX_PATH = "/mnt/sdcard/DynamicLoadPlug/app-debug.apk";
@@ -35,13 +42,17 @@ public class BaseActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         if (savedInstanceState != null) {
             mFrom = savedInstanceState.getInt(FROM, FROM_INTERNAL);
         }
+
         if (mFrom == FROM_INTERNAL) {
             super.onCreate(savedInstanceState);
             mProxyActivity = this;
-        }
+        }else
+        {}
+        createResources(DEX_PATH);
 
         Log.d(TAG, "onCreate: from= " + mFrom);
 
@@ -145,6 +156,30 @@ public class BaseActivity extends Activity {
         } else {
             mProxyActivity.addContentView(view, params);
         }
+    }
+
+
+    protected void createResources(String dexPath)
+    {
+        Log.w("flag","createresources");
+        try {
+            mAssetManager = AssetManager.class.newInstance();
+            Method addAssetPath = mAssetManager.getClass().getDeclaredMethod("addAssetPath", String.class);
+            addAssetPath.setAccessible(true);
+            addAssetPath.invoke(mAssetManager,dexPath);
+            mResources = new Resources(mAssetManager,
+                    mProxyActivity.getResources().getDisplayMetrics(),
+                    mProxyActivity.getResources().getConfiguration());
+        } catch (Exception e) {
+            Log.w("flag","createresources>>>>>>"+e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public Resources getResources() {
+        if(mFrom == FROM_INTERNAL)return super.getResources();
+        return mResources;
     }
 
 
