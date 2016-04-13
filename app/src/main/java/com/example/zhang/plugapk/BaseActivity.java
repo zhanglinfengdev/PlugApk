@@ -151,11 +151,13 @@ public class BaseActivity extends Activity {
 
     @Override
     public void addContentView(View view, ViewGroup.LayoutParams params) {
+
         if (mProxyActivity == this) {
             super.addContentView(view, params);
         } else {
             mProxyActivity.addContentView(view, params);
         }
+
     }
 
 
@@ -163,6 +165,7 @@ public class BaseActivity extends Activity {
     {
         Log.w("flag","createresources");
         try {
+
             mAssetManager = AssetManager.class.newInstance();
             Method addAssetPath = mAssetManager.getClass().getDeclaredMethod("addAssetPath", String.class);
             addAssetPath.setAccessible(true);
@@ -170,8 +173,8 @@ public class BaseActivity extends Activity {
             mResources = new Resources(mAssetManager,
                     mProxyActivity.getResources().getDisplayMetrics(),
                     mProxyActivity.getResources().getConfiguration());
+
         } catch (Exception e) {
-            Log.w("flag","createresources>>>>>>"+e.getMessage());
             e.printStackTrace();
         }
     }
