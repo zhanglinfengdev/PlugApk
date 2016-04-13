@@ -28,140 +28,124 @@ public class BaseActivity extends Activity {
     protected Activity mProxyActivity;
     protected int mFrom = FROM_INTERNAL;
 
-    public void setProxy(Activity proxyActivity)
-    {
-        Log.d(TAG,"setProxy: proxyAcitvity= "+proxyActivity);
+    public void setProxy(Activity proxyActivity) {
+        Log.d(TAG, "setProxy: proxyAcitvity= " + proxyActivity);
         this.mProxyActivity = proxyActivity;
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        if(savedInstanceState != null)
-        {
-            mFrom = savedInstanceState.getInt(FROM,FROM_INTERNAL);
+        if (savedInstanceState != null) {
+            mFrom = savedInstanceState.getInt(FROM, FROM_INTERNAL);
         }
-        if(mFrom == FROM_INTERNAL)
-        {
+        if (mFrom == FROM_INTERNAL) {
             super.onCreate(savedInstanceState);
             mProxyActivity = this;
         }
 
-        Log.d(TAG,"onCreate: from= "+mFrom);
+        Log.d(TAG, "onCreate: from= " + mFrom);
 
     }
 
     @Override
     protected void onStart() {
-        if(mProxyActivity == this)
-        {
+        if (mProxyActivity == this) {
             super.onStart();
         }
-        Log.d("flag","插件得onStart被执行了");
+        Log.d("flag", "插件的onStart被执行了");
     }
 
     @Override
     protected void onRestart() {
-        if(mProxyActivity == this)
-        {
+        if (mProxyActivity == this) {
             super.onRestart();
         }
 
-        Log.d("flag","插件得OnRestart被执行了");
+        Log.d("flag", "插件的OnRestart被执行了");
     }
 
     @Override
     protected void onResume() {
-        if(mProxyActivity == this)
-        {
+        if (mProxyActivity == this) {
             super.onResume();
         }
-        Log.d("flag","插件得onResume被执行了");
+        Log.d("flag", "插件的onResume被执行了");
     }
 
     @Override
     protected void onPause() {
-        if(mProxyActivity == this)
-        {
+        if (mProxyActivity == this) {
             super.onPause();
         }
-        Log.d("flag","插件得onPause被执行了");
+        Log.d("flag", "插件的onPause被执行了");
     }
 
     @Override
     protected void onStop() {
-        if(mProxyActivity == this)
-        {
+        if (mProxyActivity == this) {
             super.onStop();
         }
-        Log.d("flag","插件得onStop被执行了");
+        Log.d("flag", "插件的onStop被执行了");
     }
 
     @Override
     protected void onDestroy() {
-        if(mProxyActivity == this)
-        {
+        if (mProxyActivity == this) {
             super.onDestroy();
         }
-        Log.d("flag","插件得onDestroy被执行了");
+        Log.d("flag", "插件的onDestroy被执行了");
     }
 
-    protected void startActivityByProxy(String className)
-    {
-        if(mProxyActivity == this)
-        {
+    protected void startActivityByProxy(String className) {
+        if (mProxyActivity == this) {
             Intent intent = new Intent();
-            intent.setClassName(this,className);
+            intent.setClassName(this, className);
             this.startActivity(intent);
-        }else {
+        } else {
             Intent intent = new Intent(PROXY_VIEW_ACTION);
             intent.addCategory(Intent.CATEGORY_DEFAULT);
-            intent.putExtra(EXTRA_DEX_PATH,DEX_PATH);
-            intent.putExtra(EXTRA_CLASS,className);
-            Log.d(TAG,className);
-           mProxyActivity.startActivity(intent);
+            intent.putExtra(EXTRA_DEX_PATH, DEX_PATH);
+            intent.putExtra(EXTRA_CLASS, className);
+            Log.d(TAG, className);
+            mProxyActivity.startActivity(intent);
         }
     }
 
     @Override
     public void setContentView(View view, ViewGroup.LayoutParams params) {
-        if(mProxyActivity == this)
-        {
-            super.setContentView(view,params);
-        }else {
-            mProxyActivity.setContentView(view,params);
+        if (mProxyActivity == this) {
+            super.setContentView(view, params);
+        } else {
+            mProxyActivity.setContentView(view, params);
         }
     }
 
     @Override
     public void setContentView(int layoutResID) {
-        if(mProxyActivity == this)
-        {
+        if (mProxyActivity == this) {
             super.setContentView(layoutResID);
-        }else
-        {
+        } else {
             mProxyActivity.setContentView(layoutResID);
         }
     }
 
     @Override
     public void setContentView(View view) {
-        if(mProxyActivity == this)
-        {
+        if (mProxyActivity == this) {
             super.setContentView(view);
-        }else
-        {
+        } else {
             mProxyActivity.setContentView(view);
         }
     }
 
     @Override
     public void addContentView(View view, ViewGroup.LayoutParams params) {
-        if(mProxyActivity == this)
-        {
-            super.addContentView(view,params);
-        }else
-        {
-            mProxyActivity.addContentView(view,params);
+        if (mProxyActivity == this) {
+            super.addContentView(view, params);
+        } else {
+            mProxyActivity.addContentView(view, params);
         }
     }
+
+
 }
