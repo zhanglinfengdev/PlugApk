@@ -89,7 +89,7 @@ public class MainActivity extends BaseActivity implements UserLoginView{
 
     @Override
     public void toHomeActivity() {
-        startActivityByProxy("com.example.zhang.plugapk.PluginTextActivity");
+        startActivityByProxy("com.example.zhang.plugapk.HomeActivity");
     }
 
     @Override
