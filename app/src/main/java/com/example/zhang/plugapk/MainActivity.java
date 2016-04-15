@@ -4,6 +4,7 @@ import android.content.res.Resources;
 import android.content.res.XmlResourceParser;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -32,6 +33,7 @@ public class MainActivity extends BaseActivity implements UserLoginView{
         initView(savedInstanceState);
         initListener();
 
+
         mUserLoginPresenter = new UserLoginPresenter(this);
     }
 
@@ -46,12 +48,15 @@ public class MainActivity extends BaseActivity implements UserLoginView{
     }
 
     private void initView(Bundle savedInstanceState) {
-        int identifier = super.getResources().getIdentifier("activity_main","layout","com.example.zhang.plugapk");
         Resources resources = super.getResources();
+        int identifier = resources.getIdentifier("activity_main","layout","com.example.zhang.plugapk");
+        Log.d("flag_1","resources= "+resources.toString()+"identifier= "+identifier);
+        Log.d("flag_1","mProxyActivity= "+mProxyActivity);
         XmlResourceParser layout = resources.getLayout(identifier);
         LayoutInflater from = LayoutInflater.from(mProxyActivity);
         View rootLayout = from.inflate(layout, null);
         setContentView(rootLayout);
+        Log.d("flag_1","rootLayout= "+rootLayout.toString());
 
         layout_root = rootLayout.findViewById(resources.getIdentifier("layout_loginUI_root","id","com.example.zhang.plugapk"));
         et_username = (EditText) rootLayout.findViewById(resources.getIdentifier("et_loginUI_inputName","id","com.example.zhang.plugapk"));
@@ -59,6 +64,7 @@ public class MainActivity extends BaseActivity implements UserLoginView{
         btn_login = (Button) rootLayout.findViewById(resources.getIdentifier("btn_loginUI_login","id","com.example.zhang.plugapk"));
         pb_progress = ((ProgressBar) rootLayout.findViewById(resources.getIdentifier("pb_loginUI_progress", "id", "com.example.zhang.plugapk")));
     }
+
 
 
 
@@ -90,6 +96,7 @@ public class MainActivity extends BaseActivity implements UserLoginView{
     @Override
     public void toHomeActivity() {
         startActivityByProxy("com.example.zhang.plugapk.HomeActivity");
+
     }
 
     @Override
@@ -106,7 +113,7 @@ public class MainActivity extends BaseActivity implements UserLoginView{
 
     @Override
     public void showToast(String msg) {
-        Toast.makeText(this,msg,Toast.LENGTH_SHORT).show();
+        Toast.makeText(mProxyActivity,msg,Toast.LENGTH_SHORT).show();
     }
 
 

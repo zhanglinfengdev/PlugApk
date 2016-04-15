@@ -5,10 +5,12 @@ import android.content.Intent;
 import android.content.res.AssetManager;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.io.File;
 import java.lang.reflect.Method;
 
 /**
@@ -30,7 +32,7 @@ public class BaseActivity extends Activity {
 
     public static final String PROXY_VIEW_ACTION =
             "com.ryg.dynamicloadhost.VIEW";
-    public static final String DEX_PATH = "/mnt/sdcard/DynamicLoadPlug/app-debug.apk";
+    public static final String DEX_PATH = Environment.getExternalStorageDirectory().getAbsolutePath()+ File.separator+"DynamicLoadPlug/target.apk";
 
     protected Activity mProxyActivity;
     protected int mFrom = FROM_INTERNAL;
@@ -71,7 +73,6 @@ public class BaseActivity extends Activity {
         if (mProxyActivity == this) {
             super.onRestart();
         }
-
         Log.d("flag", "插件的OnRestart被执行了");
     }
 
@@ -163,7 +164,6 @@ public class BaseActivity extends Activity {
 
     protected void createResources(String dexPath)
     {
-        Log.w("flag","createresources");
         try {
 
             mAssetManager = AssetManager.class.newInstance();
@@ -175,6 +175,7 @@ public class BaseActivity extends Activity {
                     mProxyActivity.getResources().getConfiguration());
 
         } catch (Exception e) {
+            Log.d("flag","*************"+e.getMessage()+"<>");
             e.printStackTrace();
         }
     }

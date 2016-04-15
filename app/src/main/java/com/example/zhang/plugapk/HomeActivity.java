@@ -77,7 +77,7 @@ public class HomeActivity extends BaseActivity implements HomeView {
     @Override
     public void setListData(List<Contact> data) {
         this.mContacts = data;
-        adapter = new ContactAdapter(this.mContacts, mProxyActivity);
+        adapter = new ContactAdapter(this.mContacts, this);
         listView.setAdapter(adapter);
     }
 

@@ -46,7 +46,7 @@ public class ContactAdapter extends BaseAdapter{
         if(view == null)
         {
             XmlResourceParser layout = context.getResources().getLayout(context.getResources().getIdentifier("listview_item", "layout", "com.example.zhang.plugapk"));
-            view = LayoutInflater.from(context).inflate(layout, null);
+            view = LayoutInflater.from(((HomeActivity) context).mProxyActivity).inflate(layout, null);
             holder = new ViewHolder();
             holder.mName = (TextView) view.findViewById(context.getResources().getIdentifier("tv_home_showName","id","com.example.zhang.plugapk"));
             holder.mPhone = (TextView) view.findViewById(context.getResources().getIdentifier("tv_home_showPhone","id","com.example.zhang.plugapk"));
