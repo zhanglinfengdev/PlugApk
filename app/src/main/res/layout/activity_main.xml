@@ -27,6 +27,7 @@
         >
 
         <EditText
+            android:text="linfeng"
             android:id="@+id/et_loginUI_inputName"
             android:hint="输入账号"
             android:layout_width="match_parent"
@@ -34,6 +35,7 @@
             />
 
         <EditText
+            android:text="123456"
             android:layout_below="@+id/et_loginUI_inputName"
             android:id="@+id/et_loginUI_inputPass"
             android:hint="输入密码"
